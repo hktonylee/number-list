@@ -1,0 +1,25 @@
+body {
+  font-family: "Times New Roman", Georgia, Serif;
+
+}
+
+.app {
+  text-align: center;
+  min-height: 700px;
+
+  height: 100%;
+  margin: 0;
+  width: 100%;
+  position: fixed;
+  background: linear-gradient(to top, #1e3c72, #2a5298);
+}
+
+.number-list-wrapper {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+
+  .number-list {
+    margin-right: 40px;
+  }
+}
