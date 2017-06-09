@@ -87,7 +87,7 @@ export class NumberList extends Component {
         return (
             <div className='number-list'>
                 <div className='wrapper'>
-                    <CSSTransitionGroup transitionName='number-list' transitionEnterTimeout={400} transitionLeaveTimeout={1}>
+                    <CSSTransitionGroup component="div" className="transition-group" transitionName='number-list' transitionEnterTimeout={400} transitionLeaveTimeout={1}>
                         {this._renderRows()}
                     </CSSTransitionGroup>
                 </div>

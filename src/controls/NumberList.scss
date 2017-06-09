@@ -14,13 +14,15 @@
   padding-bottom: 8px;
   position: relative;
 
-  .wrapper > span {
+  .wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-end;
-    height: 100%;
-    width: 100%;
+
+    > .transition-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-end;
+    }
   }
 
   .number-list-leave.empty-div {
@@ -80,8 +82,11 @@
       }
     }
 
-    // TODO: Animation has too many glitches. Temporarily disable.
+    &.number-list-leave {
+      opacity: 0;
+    }
 
+    // TODO: Animation has too many glitches. Temporarily disable.
     //&.number-list-leave {
     //  opacity: 1;
     //  position: absolute;
