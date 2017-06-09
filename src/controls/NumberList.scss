@@ -80,16 +80,18 @@
       }
     }
 
-    &.number-list-leave {
-      opacity: 1;
-      position: absolute;
-      bottom: -8px;
+    // TODO: Animation has too many glitches. Temporarily disable.
 
-      &.number-list-leave-active {
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-    }
+    //&.number-list-leave {
+    //  opacity: 1;
+    //  position: absolute;
+    //  bottom: -8px;
+    //
+    //  &.number-list-leave-active {
+    //    opacity: 0;
+    //    transition: opacity 0.3s;
+    //  }
+    //}
 
     .number {
       min-width: 40px;
