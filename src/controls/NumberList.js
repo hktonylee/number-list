@@ -34,7 +34,7 @@ export class DataSource {
 export class NumberList extends Component {
     state = {
         animated: false,
-        lastUpdateSequence: 0,
+        lastUpdateSequence: 0,      // use to keep track of update, play animation only when there is update
     };
 
     constructor(props) {
@@ -64,7 +64,9 @@ export class NumberList extends Component {
         const numbers = dataSource.numbers;
         const animated = this.state.animated;
         const sameSequence = this.state.lastUpdateSequence === dataSource._updateSequence;
-        this.state.animated = false;        // don't use setState here
+
+        // WARNING: don't use setState here
+        this.state.animated = false;
         this.state.lastUpdateSequence = dataSource._updateSequence;
 
         if (!animated && !sameSequence) {
