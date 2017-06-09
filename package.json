@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4"
   },
   "devDependencies": {
+    "enzyme": "^2.8.2",
     "node-sass-chokidar": "0.0.2",
     "npm-run-all": "^4.0.2",
     "react-scripts": "1.0.7"

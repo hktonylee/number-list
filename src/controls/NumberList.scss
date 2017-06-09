@@ -1,0 +1,89 @@
+
+.number-list {
+  display: flex;
+  justify-content: center;
+
+  width: 100px;
+  min-height: 200px;
+  background-color: white;
+  //background: linear-gradient(to top, #ababab, #ffffff);
+  box-shadow: 0 0 5px 0 #333;
+  border-radius: 5px;
+
+  padding-top: 2px;
+  padding-bottom: 8px;
+  position: relative;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+
+  .row {
+    text-align: right;
+
+    &:first-child {
+      font-weight: bold;
+      margin-bottom: 4px;
+
+      &.even-number {
+        color: red;
+      }
+
+      &.odd-number {
+        color: blue;
+      }
+
+      .border {
+        border-bottom: solid 1px #bbb;
+        box-shadow: 0 1px 1px 0 #bbb;
+        position: absolute;
+        width: 100px;
+        left: 0;
+        margin-top: 2px;
+      }
+    }
+
+    &:first-child .number.animated {
+      animation-name: add-number-first-row-animation;
+      animation-duration: 0.15s;
+      animation-fill-mode: forwards;
+    }
+
+    &:not(:first-child) .number.animated {
+      animation-name: add-number-animation;
+      animation-duration: 0.3s;
+      animation-fill-mode: forwards;
+    }
+
+    .number {
+      min-width: 40px;
+    }
+  }
+
+  .even-number {
+    color: #CC6633;
+  }
+
+  .odd-number {
+    color: #3366CC;
+  }
+
+  .empty-div {
+    color: #666;
+  }
+}
+
+@keyframes add-number-first-row-animation {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes add-number-animation {
+  from {
+    transform: translate(0, -1em);
+  }
+}

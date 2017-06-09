@@ -1,7 +1,3 @@
-body {
-  font-family: "Times New Roman", Georgia, Serif;
-
-}
 
 .app {
   text-align: center;
@@ -18,8 +14,14 @@ body {
   margin-top: 40px;
   display: flex;
   justify-content: center;
+  flex-flow: wrap;
+  padding-left: 10%;
+  padding-right: 10%;
 
-  .number-list {
-    margin-right: 40px;
+  > * {
+    margin: 10px 10px;
   }
+
 }
+
+
