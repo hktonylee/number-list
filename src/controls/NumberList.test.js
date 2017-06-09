@@ -95,5 +95,27 @@ describe('<NumberList />', () => {
         expect(wrapper.text()).not.toContain('N/A');
     });
 
+    it('should test the numbers are correctly colored', () => {
+        let dataSource = new DataSource([112, 113, 114, 115, 116]);
+        let wrapper = shallow(<NumberList dataSource={dataSource}/>);
+        expect(wrapper.find('.number').at(0).text()).toBe('112');
+        expect(wrapper.find('.number').at(1).text()).toBe('113');
+        expect(wrapper.find('.number').at(2).text()).toBe('114');
+        expect(wrapper.find('.number').at(3).text()).toBe('115');
+        expect(wrapper.find('.number').at(4).text()).toBe('116');
+
+        expect(wrapper.find('.row').at(0).hasClass('even-number')).toBeTruthy();
+        expect(wrapper.find('.row').at(1).hasClass('even-number')).toBeFalsy();
+        expect(wrapper.find('.row').at(2).hasClass('even-number')).toBeTruthy();
+        expect(wrapper.find('.row').at(3).hasClass('even-number')).toBeFalsy();
+        expect(wrapper.find('.row').at(4).hasClass('even-number')).toBeTruthy();
+
+        expect(wrapper.find('.row').at(0).hasClass('odd-number')).toBeFalsy();
+        expect(wrapper.find('.row').at(1).hasClass('odd-number')).toBeTruthy();
+        expect(wrapper.find('.row').at(2).hasClass('odd-number')).toBeFalsy();
+        expect(wrapper.find('.row').at(3).hasClass('odd-number')).toBeTruthy();
+        expect(wrapper.find('.row').at(4).hasClass('odd-number')).toBeFalsy();
+    });
+
 });
 
