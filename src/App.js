@@ -29,12 +29,14 @@ class App extends Component {
     }
 
     render() {
+        const numberLists = this._dataSources.map((dataSource, i) => (
+            <NumberList key={i} dataSource={dataSource}/>
+        ));
+
         return (
             <div className="app">
                 <div className="number-list-wrapper">
-                    {
-                        this._dataSources.map((dataSource, i) => <NumberList key={i} dataSource={dataSource}/>)
-                    }
+                    { numberLists }
                     <NumberList dataSource={new DataSource([123, 446])}/>
                     <NumberList dataSource={new DataSource()}/>
                 </div>
