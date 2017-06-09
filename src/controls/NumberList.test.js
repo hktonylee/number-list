@@ -64,11 +64,12 @@ describe('<NumberList />', () => {
 
     it('should show N/A when there is no data', () => {
         let wrapper = shallow(<NumberList dataSource={new DataSource()}/>);
-        expect(wrapper.text()).toContain('N/A');
+        expect(wrapper.contains('N/A')).toBeTruthy();
     });
 
     it('should render the numbers in reversed chronological order', () => {
         let wrapper = shallow(<NumberList dataSource={new DataSource([112, 113, 114, 115, 116])}/>);
+        expect(wrapper.text()).not.toContain('N/A');
         expect(wrapper.find('.number').at(0).text()).toBe('112');
         expect(wrapper.find('.number').at(1).text()).toBe('113');
         expect(wrapper.find('.number').at(2).text()).toBe('114');
@@ -91,6 +92,7 @@ describe('<NumberList />', () => {
         expect(wrapper.find('.number').at(3).text()).toBe('114');
         expect(wrapper.find('.number').at(4).text()).toBe('115');
         expect(wrapper.find('.number').at(5).text()).toBe('116');
+        expect(wrapper.text()).not.toContain('N/A');
     });
 
 });

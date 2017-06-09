@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './NumberList.css';
+import {CSSTransitionGroup} from 'react-transition-group';
 
 
 export class DataSource {
@@ -33,8 +34,6 @@ export class DataSource {
 
 export class NumberList extends Component {
     state = {
-        animated: false,
-        lastUpdateSequence: 0,      // use to keep track of update, play animation only when there is update
     };
 
     constructor(props) {
@@ -62,38 +61,25 @@ export class NumberList extends Component {
     _renderRows() {
         let dataSource = this.props.dataSource;
         const numbers = dataSource.numbers;
-        const animated = this.state.animated;
-        const sameSequence = this.state.lastUpdateSequence === dataSource._updateSequence;
-
-        // WARNING: don't use setState here
-        this.state.animated = false;
-        this.state.lastUpdateSequence = dataSource._updateSequence;
-
-        if (!animated && !sameSequence) {
-            setTimeout(() => {
-                this.setState({animated: true});
-            }, 1);
-        }
 
         if (numbers.length === 0) {
             return (
-                <div className='empty-div'>N/A</div>
+                <div key="naLabel" className='empty-div'>N/A</div>
             );
 
         } else {
             let items = numbers.map((number, i) => {
                 let oddEvenClass = (number % 2 === 0 ? 'even-number' : 'odd-number');
                 let className = ['row', oddEvenClass].join(' ');
-                let animatedClass = (animated ? 'animated' :'');
                 return (
-                    <div key={i} className={className}>
-                        <div className={'number ' + animatedClass}>{number}</div>
+                    <div key={number} className={className}>
+                        <div className='number'>{number}</div>
                         <div className='border'/>
                     </div>
                 );
             });
 
-            return this._fillArrayIfLessItems(items, 10, (i) => <div key={i} className='row'>&nbsp;</div>)
+            return this._fillArrayIfLessItems(items, 10, (i) => <div key={"_" + i} className='row'>&nbsp;</div>)
         }
     }
 
@@ -101,7 +87,9 @@ export class NumberList extends Component {
         return (
             <div className='number-list'>
                 <div className='wrapper'>
-                    {this._renderRows()}
+                    <CSSTransitionGroup transitionName='number-list' transitionEnterTimeout={400} transitionLeaveTimeout={300}>
+                        {this._renderRows()}
+                    </CSSTransitionGroup>
                 </div>
             </div>
         );

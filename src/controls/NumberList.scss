@@ -14,11 +14,17 @@
   padding-bottom: 8px;
   position: relative;
 
-  .wrapper {
+  .wrapper > span {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-end;
+    height: 100%;
+    width: 100%;
+  }
+
+  .number-list-leave.empty-div {
+    opacity: 0;
   }
 
   .row {
@@ -46,16 +52,43 @@
       }
     }
 
-    &:first-child .number.animated {
-      animation-name: add-number-first-row-animation;
-      animation-duration: 0.15s;
-      animation-fill-mode: forwards;
+    &.number-list-enter {
+      .number {
+        opacity: 0.01;
+        transform: scale(1.2);
+      }
+
+      ~ .row {
+        .number {
+          transform: translate(0, -1em);
+        }
+      }
+
+      &.number-list-enter-active {
+        .number {
+          opacity: 1;
+          transform: scale(1);
+          transition: opacity 0.15s, transform 0.3s;
+        }
+
+        ~ .row {
+          .number {
+            transform: translate(0, 0);
+            transition: transform 0.3s;
+          }
+        }
+      }
     }
 
-    &:not(:first-child) .number.animated {
-      animation-name: add-number-animation;
-      animation-duration: 0.3s;
-      animation-fill-mode: forwards;
+    &.number-list-leave {
+      opacity: 1;
+      position: absolute;
+      bottom: -8px;
+
+      &.number-list-leave-active {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
     }
 
     .number {
@@ -73,6 +106,7 @@
 
   .empty-div {
     color: #666;
+    text-align: center;
   }
 }
 
