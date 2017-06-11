@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './NumberList.css';
 import {CSSTransitionGroup} from 'react-transition-group';
+import browser from 'detect-browser';
 
 
 export class DataSource {
@@ -33,14 +34,18 @@ export class DataSource {
 
 
 export class NumberList extends Component {
-    state = {
-    };
+    _transitionLeaveTimeout;
+
+    state = {};
 
     constructor(props) {
         super(props);
         if (typeof(props.dataSource) === 'undefined') {
             throw 'Must provide dataSource prop in <NumberList />';
         }
+
+        this._setTransitionLeaveTimeout();
+
         props.dataSource.setUpdateCallback(() => {
             this.forceUpdate();
         });
@@ -64,22 +69,32 @@ export class NumberList extends Component {
 
         if (numbers.length === 0) {
             return (
-                <div key="naLabel" className='empty-div'>N/A</div>
+                <div key='naLabel' className='empty-div'>N/A</div>
             );
 
         } else {
             let items = numbers.map((number, i) => {
+                let key = dataSource._updateSequence - i;
                 let oddEvenClass = (number % 2 === 0 ? 'even-number' : 'odd-number');
                 let className = ['row', oddEvenClass].join(' ');
                 return (
-                    <div key={number} className={className}>
+                    <div key={key} className={className}>
                         <div className='number'>{number}</div>
-                        <div className='border'/>
                     </div>
                 );
             });
 
-            return this._fillArrayIfLessItems(items, 10, (i) => <div key={"_" + i} className='row'>&nbsp;</div>)
+            return this._fillArrayIfLessItems(items, 10, (i) => <div key={'_' + i} className='row'>&nbsp;</div>)
+        }
+    }
+
+    _setTransitionLeaveTimeout() {
+        this._transitionLeaveTimeout = 1;
+        if (browser.name === 'chrome' || browser.name === 'safari') {
+            this._transitionLeaveTimeout = 300;
+        } else {
+            // disable on other browser => animation glitches
+            this._transitionLeaveTimeout = 1;
         }
     }
 
@@ -87,7 +102,11 @@ export class NumberList extends Component {
         return (
             <div className='number-list'>
                 <div className='wrapper'>
-                    <CSSTransitionGroup component="div" className="transition-group" transitionName='number-list' transitionEnterTimeout={400} transitionLeaveTimeout={1}>
+                    <CSSTransitionGroup component='div'
+                                        className='transition-group'
+                                        transitionName='number-list'
+                                        transitionEnterTimeout={300}
+                                        transitionLeaveTimeout={this._transitionLeaveTimeout}>
                         {this._renderRows()}
                     </CSSTransitionGroup>
                 </div>

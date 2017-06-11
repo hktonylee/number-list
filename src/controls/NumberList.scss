@@ -3,25 +3,25 @@
   display: flex;
   justify-content: center;
 
-  width: 100px;
-  min-height: 200px;
-  background-color: white;
+  min-width: 80px;
+  height: 200px;
+  //background-color: white;
   //background: linear-gradient(to top, #ababab, #ffffff);
+  background: linear-gradient(to top, #f0f0f0, #ffffff);
   box-shadow: 0 0 5px 0 #333;
   border-radius: 5px;
 
-  padding-top: 2px;
-  padding-bottom: 8px;
   position: relative;
 
   .wrapper {
     display: flex;
+    width: 100%;
 
     > .transition-group {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      align-items: flex-end;
+      justify-content: center;
+      width: 100%;
     }
   }
 
@@ -31,39 +31,62 @@
 
   .row {
     text-align: right;
+    width: 100%;
+    height: 19px;
+    border-bottom: 1px solid white;
+
+    &.even-number {
+      //color: white;
+      background-color: #ecb7ca;
+    }
+
+    &.odd-number {
+      //color: white;
+      background-color: #b7caec;
+    }
 
     &:first-child {
-      font-weight: bold;
-      margin-bottom: 4px;
+      //font-weight: bold;
+      height: 19px;
+      border-bottom: 2px solid white;
+
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      color: white;
 
       &.even-number {
-        color: red;
+        //color: white;
+        background-color: #d35985;
       }
 
       &.odd-number {
-        color: blue;
+        //color: white;
+        background-color: #5985d3;
       }
+    }
 
-      .border {
-        border-bottom: solid 1px #bbb;
-        box-shadow: 0 1px 1px 0 #bbb;
-        position: absolute;
-        width: 100px;
-        left: 0;
-        margin-top: 2px;
-      }
+    &:last-child {
+      border-bottom: none;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
     }
 
     &.number-list-enter {
       .number {
         opacity: 0.01;
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
 
+      //+ .row.even-number {
+      //  background-color: #A10005;
+      //}
+      //
+      //+ .row.odd-number {
+      //  background-color: #0500A1;
+      //}
+
       ~ .row {
-        .number {
-          transform: translate(0, -1em);
-        }
+        transform: translate(0, -1em);
       }
 
       &.number-list-enter-active {
@@ -73,42 +96,56 @@
           transition: opacity 0.15s, transform 0.3s;
         }
 
+        //+ .row.even-number {
+        //  background-color: #f3bbc0;
+        //  transition: background-color 0.15s;
+        //}
+        //
+        //+ .row.odd-number {
+        //  background-color: #c0bbf3;
+        //  transition: background-color 0.15s;
+        //}
+
         ~ .row {
-          .number {
-            transform: translate(0, 0);
-            transition: transform 0.3s;
-          }
+          transform: translate(0, 0);
+          transition: transform 0.3s;
         }
       }
     }
 
+    // TODO: Animation has glitches on Firefox. Temporarily disable.
     &.number-list-leave {
-      opacity: 0;
-    }
+      display: none;
 
-    // TODO: Animation has too many glitches. Temporarily disable.
+      //~ .row {
+      //  border-bottom-left-radius: 4px;
+      //  border-bottom-right-radius: 4px;
+      //}
+    }
     //&.number-list-leave {
     //  opacity: 1;
-    //  position: absolute;
-    //  bottom: -8px;
+    //  position: fixed;
+    //  //bottom: -10px;
     //
     //  &.number-list-leave-active {
     //    opacity: 0;
-    //    transition: opacity 0.3s;
+    //    transition: opacity 0.3s linear;
     //  }
     //}
 
     .number {
       min-width: 40px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
   }
 
   .even-number {
-    color: #CC6633;
+    color: #F33;
   }
 
   .odd-number {
-    color: #3366CC;
+    color: #33F;
   }
 
   .empty-div {

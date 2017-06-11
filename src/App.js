@@ -14,9 +14,6 @@ class App extends Component {
         new DataSource(),
         new DataSource(),
         new DataSource(),
-        new DataSource(),
-        new DataSource(),
-        new DataSource(),
     ];
 
     componentDidMount() {
