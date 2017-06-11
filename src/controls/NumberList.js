@@ -33,6 +33,13 @@ export class DataSource {
 }
 
 
+export class MissingDataSourceException {
+    getMessage() {
+        return 'Must provide dataSource prop in <NumberList />';
+    }
+}
+
+
 export class NumberList extends Component {
     _transitionLeaveTimeout;
 
@@ -41,7 +48,7 @@ export class NumberList extends Component {
     constructor(props) {
         super(props);
         if (typeof(props.dataSource) === 'undefined') {
-            throw 'Must provide dataSource prop in <NumberList />';
+            throw new MissingDataSourceException();
         }
 
         this._setTransitionLeaveTimeout();

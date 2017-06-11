@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {NumberList, DataSource} from './NumberList';
+import {NumberList, DataSource, MissingDataSourceException} from './NumberList';
 
 
 describe('DataSource', () => {
@@ -59,7 +59,7 @@ describe('<NumberList />', () => {
 
     it('should throw error when there is no dataSource prop', () => {
         expect(() => shallow(<NumberList />))
-            .toThrow('Must provide dataSource prop in <NumberList />');
+            .toThrow(MissingDataSourceException);
     });
 
     it('should show N/A when there is no data', () => {
