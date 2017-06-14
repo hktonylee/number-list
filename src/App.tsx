@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import './App.css';
-import {DataSource, NumberList} from "./controls/NumberList";
+import {DataSource, NumberList} from './controls/NumberList';
 
-class App extends Component {
-
-    state = {};
+class App extends React.Component<{}, null> {
 
     _dataSources = [
         new DataSource(),
@@ -17,12 +15,14 @@ class App extends Component {
     ];
 
     componentDidMount() {
-        setInterval(() => {
-            this._dataSources.forEach(dataSource => {
-                const newNumber = Math.ceil(Math.random() * Math.pow(10, (Math.random() * 3 + 2)));
-                dataSource.prepend(newNumber);
-            });
-        }, 1000);
+        setInterval(
+            () => {
+                this._dataSources.forEach(dataSource => {
+                    const newNumber = Math.ceil(Math.random() * Math.pow(10, (Math.random() * 3 + 2)));
+                    dataSource.prepend(newNumber);
+                });
+            },
+            1000);
     }
 
     render() {
@@ -33,13 +33,14 @@ class App extends Component {
         return (
             <div className="app">
                 <div className="number-list-wrapper">
-                    { numberLists }
+                    {numberLists}
                     <NumberList dataSource={new DataSource([123, 446])}/>
                     <NumberList dataSource={new DataSource()}/>
                 </div>
             </div>
         );
     }
+
 }
 
 export default App;

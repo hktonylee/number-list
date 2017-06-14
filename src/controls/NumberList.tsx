@@ -1,34 +1,38 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import './NumberList.css';
 import {CSSTransitionGroup} from 'react-transition-group';
-import browser from 'detect-browser';
+import * as browser from 'detect-browser';
+
+
+type DataSourceCallback = () => void;
 
 
 export class DataSource {
-    _updateSequence = 0;
-    _updateCallback = undefined;
+    _updateSequence: number = 0;
+    _updateCallback: null | DataSourceCallback = null;
 
-    numbers;
+    numbers: Array<number>;
 
-    constructor(numbers) {
+    constructor(numbers?: Array<number>) {
         this.numbers = (numbers ? numbers.slice(0) : []);
     }
 
-    prepend(n) {
+    prepend(n: number): void {
         this.numbers.splice(0, 0, n);
         this.numbers.splice(10);
         this._updateSequence += 1;
         this._callUpdateCallback();
     }
 
-    setUpdateCallback(callback) {
+    setUpdateCallback(callback: DataSourceCallback): void {
         this._updateCallback = callback;
     }
 
     _callUpdateCallback() {
-        if (this._updateCallback !== undefined) {
+        if (this._updateCallback !== null) {
             this._updateCallback();
         }
+        return 5;
     }
 }
 
@@ -40,12 +44,15 @@ export class MissingDataSourceException {
 }
 
 
-export class NumberList extends Component {
-    _transitionLeaveTimeout;
+interface NumberListProps {
+    dataSource: DataSource;
+}
 
-    state = {};
 
-    constructor(props) {
+export class NumberList extends React.Component<NumberListProps, null> {
+    _transitionLeaveTimeout: number;
+
+    constructor(props: NumberListProps) {
         super(props);
         if (typeof(props.dataSource) === 'undefined') {
             throw new MissingDataSourceException();
@@ -58,8 +65,9 @@ export class NumberList extends Component {
         });
     }
 
-    // This function ensures that enough <div> are filled in the .number-list.wrapper, so that the layout remains intact.
-    _fillArrayIfLessItems(array, n, itemFunc) {
+    // This function ensures that enough <div> are filled in the .number-list.wrapper, so that the layout
+    // remains intact.
+    _fillArrayIfLessItems<T>(array: Array<T>, n: number, itemFunc: (index: number) => T) {
         const oldLength = array.length;
         const diff = n - oldLength;
         if (diff > 0) {
@@ -76,22 +84,22 @@ export class NumberList extends Component {
 
         if (numbers.length === 0) {
             return (
-                <div key='naLabel' className='empty-div'>N/A</div>
+                <div key="naLabel" className="empty-div">N/A</div>
             );
 
         } else {
-            let items = numbers.map((number, i) => {
+            let items = numbers.map((num, i) => {
                 let key = dataSource._updateSequence - i;
-                let oddEvenClass = (number % 2 === 0 ? 'even-number' : 'odd-number');
+                let oddEvenClass = (num % 2 === 0 ? 'even-number' : 'odd-number');
                 let className = ['row', oddEvenClass].join(' ');
                 return (
                     <div key={key} className={className}>
-                        <div className='number'>{number}</div>
+                        <div className="number">{num}</div>
                     </div>
                 );
             });
 
-            return this._fillArrayIfLessItems(items, 10, (i) => <div key={'_' + i} className='row'>&nbsp;</div>)
+            return this._fillArrayIfLessItems(items, 10, (i) => <div key={'_' + i} className="row">&nbsp;</div>);
         }
     }
 
@@ -107,13 +115,15 @@ export class NumberList extends Component {
 
     render() {
         return (
-            <div className='number-list'>
-                <div className='wrapper'>
-                    <CSSTransitionGroup component='div'
-                                        className='transition-group'
-                                        transitionName='number-list'
-                                        transitionEnterTimeout={300}
-                                        transitionLeaveTimeout={this._transitionLeaveTimeout}>
+            <div className="number-list">
+                <div className="wrapper">
+                    <CSSTransitionGroup
+                        component="div"
+                        className="transition-group"
+                        transitionName="number-list"
+                        transitionEnterTimeout={300}
+                        transitionLeaveTimeout={this._transitionLeaveTimeout}
+                    >
                         {this._renderRows()}
                     </CSSTransitionGroup>
                 </div>
