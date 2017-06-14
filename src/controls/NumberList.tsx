@@ -37,13 +37,6 @@ export class DataSource {
 }
 
 
-export class MissingDataSourceException {
-    getMessage() {
-        return 'Must provide dataSource prop in <NumberList />';
-    }
-}
-
-
 interface NumberListProps {
     dataSource: DataSource;
 }
@@ -54,9 +47,6 @@ export class NumberList extends React.Component<NumberListProps, null> {
 
     constructor(props: NumberListProps) {
         super(props);
-        if (typeof(props.dataSource) === 'undefined') {
-            throw new MissingDataSourceException();
-        }
 
         this._setTransitionLeaveTimeout();
 

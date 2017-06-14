@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {shallow} from 'enzyme';
-import {NumberList, DataSource, MissingDataSourceException} from './NumberList';
+import {NumberList, DataSource} from './NumberList';
 
 
 describe('DataSource', () => {
@@ -57,14 +57,10 @@ describe('DataSource', () => {
 
 describe('<NumberList />', () => {
 
-    it('should throw error when there is no dataSource prop', () => {
-        expect(() => shallow(<NumberList />))
-            .toThrow(MissingDataSourceException);
-    });
-
     it('should show N/A when there is no data', () => {
         let wrapper = shallow(<NumberList dataSource={new DataSource()}/>);
-        expect(wrapper.contains('N/A')).toBeTruthy();
+        // FIXME: the type definition does not correctly define this function
+        expect(wrapper.contains('N/A' as any)).toBeTruthy();
     });
 
     it('should render the numbers in reversed chronological order', () => {
